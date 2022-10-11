@@ -12,6 +12,9 @@
   -webkit-tap-highlight-color: transparent;
   font-family: 'Poppins', sans-serif;
 }
+body {
+  background-color: rgb(212, 212, 212);
+}
 header {
   display: flex;
   flex-direction: column;
@@ -69,7 +72,9 @@ select {
 .form-btn-div {
   grid-column: 1/-1;
 }
-.form-btn {
+.form-btn,
+.edit-btn,
+.remove-btn {
   background-color: rgb(212, 212, 212);
   padding: 4px 8px;
   font-size: 18px;
@@ -77,11 +82,15 @@ select {
   border: 3px solid var(--main-dark);
   transition: 0.3s ease-in-out;
 }
-.form-btn:active {
+.form-btn:active,
+.edit-btn:active,
+.remove-btn:active {
   position: relative;
   top: 3px;
 }
-.form-btn:hover {
+.form-btn:hover,
+.edit-btn:hover,
+.remove-btn:hover {
   scale: 1.1;
 }
 .cards-container {
@@ -109,8 +118,23 @@ select {
   gap: 12px;
   padding: 16px 0;
 }
+.book-btns {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.edit-btn {
+  background-color: rgb(98, 98, 236);
+}
+.remove-btn {
+  background-color: rgb(236, 122, 122);
+}
 @media (max-width: 300px) {
-  .input-field input {
-    width: 90%;
+  .input-field input,
+  .book-card {
+    max-width: 80%;
   }
 }
