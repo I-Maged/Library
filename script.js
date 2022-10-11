@@ -21,3 +21,10 @@ myLibrary.push(theHobbit);
 myLibrary.push(GameOfThrones);
 myLibrary.push(TheGuestList);
 console.log(myLibrary);
+
+document.querySelector('.form-btn').addEventListener('click', (e) => {
+  e.preventDefault();
+  const bookTitle = document.querySelector('#title');
+  const bookRead = document.querySelector('#read');
+  console.log(bookRead.value);
+});

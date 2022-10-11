@@ -6,26 +6,41 @@
     <title></title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <header>
+      <h3>welcome to</h3>
       <h1>My Library</h1>
-      <form>
+      <h3>Here you can add, edit or remove books</h3>
+    </header>
+    <div class="book-form">
+      <h3>Add new book</h3>
+      <form autocomplete="off">
         <div class="input-field">
-          <label for="title">Book Title</label>
+          <label for="title">Book Title:</label>
           <input type="text" name="title" id="title" placeholder=" " />
         </div>
         <div class="input-field">
-          <label for="author">Book Author</label>
+          <label for="author">Book Author:</label>
           <input type="text" name="author" id="author" placeholder=" " />
         </div>
         <div class="input-field">
-          <label for="pages"># Of Pages</label>
-          <input type="text" name="pages" id="pages" placeholder=" " />
+          <label for="pages">Number Of Pages:</label>
+          <input type="number" name="pages" id="pages" placeholder=" " />
+        </div>
+        <div class="input-field">
+          <label for="read">Have you read this book?</label>
+          <select name="read" id="read">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div class="input-field form-btn-div">
+          <button class="form-btn">ADD BOOK</button>
         </div>
       </form>
-    </header>
+    </div>
 
     <script src="./script.js" async defer></script>
   </body>
