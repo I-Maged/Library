@@ -1,4 +1,13 @@
-//Array saves all books
+//gathering form input
+const bookTitle = document.querySelector('#title');
+const bookAuthor = document.querySelector('#author');
+const bookPages = document.querySelector('#pages');
+const bookRead = document.querySelector('#read');
+//form btns
+const addBookForm = document.querySelector('.add-form-btn');
+const editBookForm = document.querySelector('.edit-form-btn');
+editBookForm.style.display = 'none';
+//Array saves all book objects
 const myLibrary = [];
 //Book object
 function Book(title, author, pages, read, id) {
@@ -8,6 +17,7 @@ function Book(title, author, pages, read, id) {
   this.read = read;
   this.id = id;
 }
+
 //manually added a few books
 const theHobbit = new Book(
   'The Hobbit',
@@ -34,19 +44,20 @@ const TheGuestList = new Book(
 myLibrary.push(theHobbit);
 myLibrary.push(GameOfThrones);
 myLibrary.push(TheGuestList);
-// console.log(myLibrary);
 
 //add new book
-document.querySelector('.form-btn').addEventListener('click', (e) => {
+addBookForm.addEventListener('click', (e) => {
   e.preventDefault();
-  const bookTitle = document.querySelector('#title').value;
-  const bookAuthor = document.querySelector('#author').value;
-  const bookPages = document.querySelector('#pages').value;
-  const bookRead =
-    document.querySelector('#read').value == 'yes' ? true : false;
-
+  const readStatus = bookRead.value == 'yes' ? true : false;
   const id = Math.random();
-  let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead, id);
+  const newBook = new Book(
+    bookTitle.value,
+    bookAuthor.value,
+    bookPages.value,
+    readStatus,
+    id
+  );
+  clearForm();
   myLibrary.push(newBook);
   displayBook(newBook);
 });
@@ -58,17 +69,19 @@ function displayBook(book) {
 
   let bookCard = document.createElement('div');
 
-  bookCard.innerHTML = `<div class="book-card" id="div-01">
+  bookCard.innerHTML = `<div class="book-card" id=${book.id}>
   <h3 class="book-title">${book.title}</h3>
   <div class="book-info">
     <div class="info-field">
-      <p>Author: ${book.author}</p>
+      <p class="book-author">Author: ${book.author}</p>
     </div>
     <div class="info-field">
-      <p># of pages: ${book.pages}</p>
+      <p class="book-pages"># of pages: ${book.pages}</p>
     </div>
     <div class="info-field">
-      <p>Read status: ${book.read ? 'Read' : 'Not read yet'}</p>
+      <p class="book-read-status">Read status: ${
+        book.read ? 'Read' : 'Not read yet'
+      }</p>
     </div>
   </div>
   <div class="book-btns">
@@ -83,8 +96,65 @@ function displayBook(book) {
   document.querySelectorAll('.remove-btn').forEach((removeBtn) => {
     removeBtn.addEventListener('click', removeBook);
   });
+  //edit buttons event listener
+  document.querySelectorAll('.edit-btn').forEach((editBtn) => {
+    editBtn.addEventListener('click', (e) => {
+      addBookForm.style.display = 'none';
+      editBookForm.style.display = 'block';
+      editBook(e);
+    });
+  });
 }
 
+function editBook(e) {
+  let bookToEdit;
+
+  myLibrary.forEach((book) => {
+    if (book.id == e.target.value) {
+      bookToEdit = book;
+    }
+  });
+  bookTitle.value = bookToEdit.title;
+  bookAuthor.value = bookToEdit.author;
+  bookPages.value = bookToEdit.pages;
+  bookRead.value = bookToEdit.read ? 'yes' : 'no';
+
+  editBookForm.addEventListener('click', (e) => {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    addBookForm.style.display = 'block';
+    editBookForm.style.display = 'none';
+
+    myLibrary.forEach((book) => {
+      if (book.id == bookToEdit.id) {
+        book.title = bookTitle.value;
+        book.author = bookAuthor.value;
+        book.pages = bookPages.value;
+        book.read = bookRead.value == 'yes' ? true : false;
+        updateDisplay(book);
+        console.log(book);
+      }
+    });
+    console.log(myLibrary);
+  });
+}
+function updateDisplay(book) {
+  let bookDisplay = document.querySelectorAll('.book-card');
+
+  bookDisplay.forEach((div) => {
+    if (div.id == book.id) {
+      div.querySelector('.book-title').innerHTML = book.title;
+      div.querySelector('.book-author').innerHTML = `Author: ${book.author}`;
+      div.querySelector('.book-pages').innerHTML = `# of pages: ${book.pages}`;
+      div.querySelector('.book-read-status').innerHTML = `Read status: ${
+        book.read ? 'Read' : 'Not read yet'
+      }`;
+    }
+  });
+  addBookForm.style.display = 'block';
+  editBookForm.style.display = 'none';
+  clearForm();
+}
 function removeBook(e) {
   myLibrary.forEach(function (book, index, object) {
     if (book.id == e.target.value) {
@@ -92,13 +162,20 @@ function removeBook(e) {
       let bookBtns = e.target.parentNode;
       let bookCard = bookBtns.parentNode;
       let cards = bookCard.parentNode;
-
       cards.style.display = 'none';
       cards.remove();
 
-      //remove book from array
+      //remove book from object array
       object.splice(index, 1);
-      console.log(myLibrary);
     }
   });
+}
+function clearForm() {
+  if (editBookForm.style.display == 'block') {
+    return;
+  }
+  bookTitle.value = '';
+  bookAuthor.value = '';
+  bookPages.value = '';
+  bookRead.value = 'yes';
 }

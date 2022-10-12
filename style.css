@@ -72,7 +72,8 @@ select {
 .form-btn-div {
   grid-column: 1/-1;
 }
-.form-btn,
+.add-form-btn,
+.edit-form-btn,
 .edit-btn,
 .remove-btn {
   background-color: rgb(212, 212, 212);
@@ -82,13 +83,15 @@ select {
   border: 3px solid var(--main-dark);
   transition: 0.3s ease-in-out;
 }
-.form-btn:active,
+.add-form-btn:active,
+.edit-form-btn:active,
 .edit-btn:active,
 .remove-btn:active {
   position: relative;
   top: 3px;
 }
-.form-btn:hover,
+.add-form-btn:hover,
+.edit-form-btn:hover,
 .edit-btn:hover,
 .remove-btn:hover {
   scale: 1.1;
